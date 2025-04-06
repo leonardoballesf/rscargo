@@ -1,0 +1,47 @@
+#php_flag display_errors on
+#php_value error_reporting 9999
+
+php_value session.gc_maxlifetime 14400
+php_value session.cookie_lifetime 14400
+
+    ErrorLog /home/s79bthfcv9ze/rscargos/rscargos/sistema/logs/sisclientes.apache.error.log
+    CustomLog /home/s79bthfcv9ze/rscargos/rscargos/sistema/logs/sisclientes.apache.access.log common
+    php_flag log_errors on
+    php_flag display_errors on
+    php_value error_reporting 2147483647
+    php_value error_log /home/s79bthfcv9ze/rscargos/rscargos/sistema/logs/sisclientes.php.error.log
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+#RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+</IfModule>
+
+#RewriteCond %{HTTP_REFERER} !^http://rscargos.com/.*$      [NC]
+#RewriteCond %{HTTP_REFERER} !^http://rscargos.com$      [NC]
+#RewriteCond %{HTTP_REFERER} !^http://sisclientes.rscargos.com/.*$      [NC]
+#RewriteCond %{HTTP_REFERER} !^http://sisclientes.rscargos.com$      [NC]
+#RewriteCond %{HTTP_REFERER} !^http://www.rscargos.com/.*$      [NC]
+#RewriteCond %{HTTP_REFERER} !^http://www.rscargos.com$      [NC]
+#RewriteCond %{HTTP_REFERER} !^http://www.sisclientes.rscargos.com/.*$      [NC]
+#RewriteCond %{HTTP_REFERER} !^http://www.sisclientes.rscargos.com$      [NC]
+#RewriteCond %{HTTP_REFERER} !^https://rscargos.com/.*$      [NC]
+#RewriteCond %{HTTP_REFERER} !^https://rscargos.com$      [NC]
+#RewriteCond %{HTTP_REFERER} !^https://sisclientes.rscargos.com/.*$      [NC]
+#RewriteCond %{HTTP_REFERER} !^https://sisclientes.rscargos.com$      [NC]
+#RewriteCond %{HTTP_REFERER} !^https://www.rscargos.com/.*$      [NC]
+#RewriteCond %{HTTP_REFERER} !^https://www.rscargos.com$      [NC]
+#RewriteCond %{HTTP_REFERER} !^https://www.sisclientes.rscargos.com/.*$      [NC]
+#RewriteCond %{HTTP_REFERER} !^https://www.sisclientes.rscargos.com$      [NC]
+#RewriteRule .*\.(jpg|jpeg|gif|png|bmp)$ - [F,NC]
+
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php72” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php72 .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

@@ -1,0 +1,147 @@
+<?php
+/**
+ * @name SellersController 
+ * @author YONY ACEVEDO
+ * @description Controlador que se encarga de procesar las solicitudes relacionadas 
+ * a los Vendedores o Empleados de la Empresa
+ */
+    
+class SellersController extends Controller {
+    
+    public function __construct() {
+        parent::__construct();
+        Auth::handleLogin();
+
+    }
+        
+    public function index() 
+    {    
+        $this->view->app->js = array(
+            'js/Sellers/Sellers.js',
+            'js/custom.js'
+        );
+
+        $this->view->app->css = array(
+            'css/Sellers/Sellers.css',
+            'css/default.css' 
+        );
+       
+        $this->view->title = 'Listado de Empleados';
+        $this->view->render('header');
+        $this->view->render('Sellers/index');
+        $this->view->render('footer');
+    }
+    
+    public function sellersjson() 
+    {   
+        $list=$this->model->findByParams($this->view->request->data);
+        
+        foreach ($list['data'] as $key => $value) {
+            
+            $list['data'][$key]=array(
+                'id'=> $value->sellers_id,
+                'description'=> "<small>".$value->sellers_description."</small>",
+                'identity_card'=> "<small>".$value->sellers_identity_card."</small>",
+                'address'=> "<small>".$value->sellers_address."</small>",
+                'phone'=> "<small>".$value->sellers_phone."</small>",
+                'birthdate'=> "<small>".date('d/m/Y', strtotime($value->sellers_birthdate))."</small>",
+                'users_id'=> $value->sellers_users_id,
+                'is_active'=> $value->sellers_is_active,
+                'estatus'=> "<span class=\"".$this->view->statusClass[$value->sellers_is_active]."\"><small>".$this->view->status[$value->sellers_is_active]."</small></span>",
+                'created'=> "<small>".date('d/m/Y', strtotime($value->sellers_created))."</small>",
+                'hour'=> "<small>".date('g:i:s A', strtotime($value->sellers_created))."</small>",
+                'opciones'=> '
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default text-danger-lighter light" onclick="location.href=\'Sellers/edit/'.$value->sellers_id.'\'">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                </div>'
+            );
+        }
+        
+        header('Content-type: application/json; charset=utf-8');
+        echo json_encode($list,JSON_PRETTY_PRINT);
+        exit();
+
+    }
+
+    public function add() 
+    {   
+        $this->view->debug=$this->view->request;
+        $variables=array("variables"=>$this->view->debug);
+        
+        $this->view->app->js = array(
+        'js/Sellers/Sellers.js',
+        'js/Sellers/Add.js',
+        'js/custom.js'
+        );
+
+        $this->view->app->css = array(
+        'css/Sellers/Sellers.css',
+        'css/default.css' 
+        );
+
+        $this->view->title = 'Agregar Empleado';
+        $this->view->bookshopList= $this->model->selector(array("table"=>'bookshop',"fields"=>array("id"=>'id',"description"=>'description')));
+        $this->view->bookshopRegionsList= $this->model->selector(array("table"=>'regions',"fields"=>array("id"=>'id',"description"=>'description')));
+        $this->view->bookshopLocationList= $this->model->selector(array("table"=>'location',"fields"=>array("id"=>'id',"description"=>'location as description')));
+            
+        if($this->view->request->method==='POST' && !empty($this->view->request->data)){
+            $this->view->request->data['operation']='CREATE';
+            $this->view->request->data['sellers_business_id']= Session::get('business_id');
+            $this->view->request->data['sellers_users_id']= Session::get('userid');
+            $this->view->request->data['unique']= array('identity_card');
+            
+            $this->view->message = $this->model->save($this->view->request->data);
+            header('Content-type: application/json; charset=utf-8');
+            echo json_encode($this->view->message);
+            
+        }elseif($this->view->request->method==='GET'){
+            $this->view->render('header');
+            $this->view->render('Sellers/add');
+            $this->view->render('footer');
+        }
+    }
+    
+    public function edit($id) 
+    {   
+        $this->view->debug=$this->view->request;
+
+        $this->view->app->js = array(
+        'js/Sellers/Sellers.js',
+        'js/Sellers/Edit.js',
+        'js/custom.js'
+        );
+        
+        $this->view->app->css = array(
+        'css/Sellers/Sellers.css',
+        'css/default.css' 
+        );
+
+        $this->view->title = 'Editar Empleado';
+        $this->view->List = $this->model->find($id);
+        
+        if(isset($id) && !empty($id) && is_numeric($id)){
+            
+            if($this->view->request->method==='POST' && !empty($this->view->request->data)){
+                $this->view->request->data['operation']='UPDATE';
+                $this->view->request->data['where']=array("id"=>$id);
+                $this->view->message = $this->model->save($this->view->request->data);
+
+                header('Content-type: application/json; charset=utf-8');
+                echo json_encode($this->view->message);
+
+            }else{
+                $this->view->render('header');
+                $this->view->render('Sellers/edit',array("variables"=>$this->view->debug));
+                $this->view->render('footer');
+            }
+            
+        }else{
+            $this->view->redirect('Error/index/500');
+        }
+    }    
+    
+    
+    
+}

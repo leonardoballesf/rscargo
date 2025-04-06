@@ -1,0 +1,74 @@
+/*
+ * Processing indicator
+ */
+.dataTables_processing {
+	position: absolute !important;
+	top: 50% !important;
+	left: 50% !important;
+	width: 180px !important;
+	height: 100px !important;
+	margin-left: -125px !important;
+	margin-top: -15px !important;
+	padding: 14px 0 2px 0 !important;
+	border: 1px solid #991915 !important;
+	text-align: center !important;
+	color: #991915 !important;
+	font-size: 14px !important;
+	background-color: white !important;
+        z-index: 2500 !important;
+}
+
+/* line 88, ../scss/theme/default/layout.scss */
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #991915 !important;
+  color: white !important;
+}
+
+.topbar-menu .metro-tile .metro-title-template {
+  position: absolute;
+  font-size: 11px;
+  font-weight: 600;
+  left: 0;
+  right: 0;
+  top: 10;
+  bottom: 0;
+}
+    
+.dockmodal-header{
+  background-color: #991915 !important;
+  color: white !important;
+    
+}
+
+/* Datepicker Styles */
+
+.date{
+  background-color: #ececec !important;    
+  color: black !important;
+  cursor: pointer !important;
+}
+
+.ui-datepicker-trigger {
+    border:none;
+    background:none;
+    float: right;
+}
+
+input.small-9.columns.hasDatepicker {
+    float: left;
+    width: 73%;
+}
+
+button.ui-datepicker-trigger {
+    background: #FFF;
+    color: #333;
+    padding: 9px 14px;
+}
+
+button.ui-datepicker-trigger:hover {
+    background: #CCC;
+}
+
+button.ui-datepicker-trigger i.fa.icon-calendar {
+    color: black;
+}

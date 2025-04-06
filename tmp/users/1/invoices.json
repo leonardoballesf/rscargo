@@ -1,0 +1,24 @@
+{
+    "Invoices": {
+        "code": "F2017-21-0000000001",
+        "bardcode": "2017210000000001",
+        "customer": [
+            {
+                "id": 18927,
+                "bookshop_id": 1,
+                "users_id": 1,
+                "nationality_id": 1,
+                "type_id": 1,
+                "identity_card": "V-015106515",
+                "name": "YONY RAFAEL ACEVEDO",
+                "phone": "0212-9866273",
+                "cell_phone": "0426-3321197",
+                "email": "YONYACE@GMAIL.COM",
+                "address": "LA GUAIRITA",
+                "is_active": 1,
+                "created": "2017-05-20 10:22:54",
+                "modified": "2017-05-21 15:46:43"
+            }
+        ]
+    }
+}
